@@ -1,0 +1,168 @@
+  /* 
+			DESAFIO TÉCNICO DHAUZ
+    
+	Para realizar a manipulação de dados na base MySql disponibilizada 
+foi utilizada a IDE MySQL Workbench o que torna o teste muito similar à rotina de desenvolvimento SQL.
+ 
+ */ 	
+
+----------------------------------------------------------------------------------------------------------
+  /*
+
+			INCIO DO DESAFIO 
+	
+	Fase 1 – Análise sobre as transações:  											
+	
+	Utilizando a tabela de transações (db_hiring_test.raw_transactions_table), você deve implementar trechos de código que respondam as seguintes perguntas:
+
+
+1. Qual é o endereço (carteira) com maior volume de transações enviadas?
+
+
+SELECT
+         AddressOrigin  AS CARTEIRA
+       , MAX(TotalSent) AS MAIOR_VALOR_ENVIADO
+FROM
+         db_hiring_test.raw_transactions_table
+WHERE
+         STATUS        = 'CONFIRMED'
+         AND TotalSent > 1
+GROUP BY
+         IdTransaction
+ORDER BY
+         SentDate DESC LIMIT 1
+		 
+
+2. Qual é o dia do mês com maior volume de transações realizadas?
+
+SELECT
+         extract(DAY from SENTDATE) AS 'DIA'
+FROM
+         db_hiring_test.raw_transactions_table
+WHERE
+         STATUS        = 'CONFIRMED'
+         AND TotalSent > 1
+GROUP BY
+         IdTransaction
+ORDER BY
+         SENTDATE DESC LIMIT 1
+
+
+3. Em qual dia da semana geralmente mais transações são realizadas?
+
+
+SELECT DISTINCT
+         COUNT(IdTransaction) AS QTDE_TRASACAO
+       ,
+         (
+                  CASE WEEKDAY(SENTDATE)
+                           when 0
+                                    then 'Segunda-feira'
+                           when 1
+                                    then 'Terça-feira'
+                           when 2
+                                    then 'Quarta-feira'
+                           when 3
+                                    then 'Quinta-feira'
+                           when 4
+                                    then 'Sexta-feira'
+                           when 5
+                                    then 'Sábado'
+                           when 6
+                                    then 'Domingo'
+                  END
+         )
+         AS Dia_Da_Semana
+FROM
+         db_hiring_test.raw_transactions_table
+GROUP BY
+         DIA_DA_SEMANA
+ORDER BY
+         QTDE_TRASACAO DESC LIMIT 1
+
+
+4. Quais transações possuem condições atípicas e precisam ser validadas com o time responsável pela disponibilização dos dados?
+
+(id ID3017)
+
+SELECT *
+FROM
+         db_hiring_test.raw_transactions_table
+WHERE
+         TOTALSENT LIKE '%(%'
+ORDER BY
+         SentDate DESC
+
+
+
+
+5. Qual a carteira com o maior saldo final? (considere que todas as carteiras estejam zeradas no início das análises e que seja possível existir saldo negativo).
+
+
+SELECT
+         AddressOrigin AS 'carteira'
+       , totalsent     as 'Saldo_Final'
+FROM
+         db_hiring_test.raw_transactions_table
+where
+         status = 'confirmed'
+group by
+         IdTransaction
+order by
+         TotalSent desc limit 1
+
+
+
+
+
+Importante:
+• Considere sempre que as análises devem ser realizadas utilizando as informações mais atualizadas possíveis.
+• Nessa questão não é necessário considerar a existência das taxas.
+ 
+
+
+*/
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+/* 
+			Fase 2 – Análise sobre as taxas:
+		
+	Utilizando a tabela de transações e a de taxas (db_hiring_test.raw_transactions_fee), você deve implementar trechos de código que respondam as seguintes perguntas:
+
+
+1. Considerando que a carteira origem é responsável por pagar as taxas de envio, qual carteira seria responsável pelo maior pagamento de taxas em janeiro de 2021?
+
+
+
+
+
+
+
+
+2. E em fevereiro de 2021?
+
+
+
+
+3. Qual é o id da transação com a maior taxa paga?
+
+
+
+
+
+4. Qual é a média de taxa paga considerando todas as transações realizadas?
+
+
+
+
+
+
+Importante:
+• Considere sempre que as análises devem ser realizadas utilizando as informações mais atualizadas possíveis.
+
+*/
+	
+		
+  
+  
